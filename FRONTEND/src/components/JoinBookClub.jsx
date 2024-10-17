@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import api from '../Services/Api';
 
 const JoinBookClub = () => {
   const [bookClubs, setBookClubs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBookClubs = async () => {
       try {
-        const response = await axios.get('/api/book-clubs'); // Adjust this endpoint as needed
+        const response = await api.get('/book-clubs');
         setBookClubs(response.data);
       } catch (error) {
         console.error('Error fetching book clubs:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchBookClubs();
   }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div>
@@ -36,5 +41,5 @@ const JoinBookClub = () => {
     </div>
   );
 };
- 
+
 export default JoinBookClub;

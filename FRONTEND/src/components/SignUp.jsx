@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
-function SignUp() {
+const SignUp = ({ onSignUp }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,10 +21,15 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Save the formData to backend or localStorage as per your authentication setup
-    console.log(formData);
-    // Redirect to Job Seeker Dashboard after signup
-    navigate("/home");
+    // Simulate API call to save user data
+    console.log("Form submitted:", formData);
+
+    if (typeof onSignUp === "function") {
+      onSignUp(formData); 
+      navigate("/");
+    } else {
+      setError("Signup function is not defined.");
+    }
   };
 
   return (
@@ -63,10 +69,11 @@ function SignUp() {
             required
           />
         </div>
+        {error && <p className="error-message">{error}</p>}
         <button type="submit">Sign Up</button>
       </form>
     </div>
   );
-}
+};
 
 export default SignUp;
