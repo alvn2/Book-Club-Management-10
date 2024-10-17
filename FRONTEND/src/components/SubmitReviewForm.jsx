@@ -1,36 +1,37 @@
+// src/components/SubmitReviewForm.js
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom'; 
+import { useParams, useNavigate } from 'react-router-dom';
 
 const SubmitReviewForm = () => {
-  const { clubId, bookId } = useParams(); 
+  const { clubId, bookId } = useParams();
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();   
+  const navigate = useNavigate();
 
   const initialValues = {
     rating: '',
     comment: '',
-  };   
+  };
 
   const validationSchema = Yup.object().shape({
     rating: Yup.number().required('Required').min(1).max(5),
     comment: Yup.string().required('Required'),
-  });   
+  });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       await axios.post(`/api/book-clubs/${clubId}/books/${bookId}/reviews`, values);
       setSuccessMessage('Review submitted successfully!');
       setSubmitting(false);
-      navigate(`/book-clubs/${clubId}/books`); 
+      navigate(`/book-clubs/${clubId}/books`);
     } catch (error) {
       setErrorMessage('Error submitting review. Please try again.');
       setSubmitting(false);
     }
-  };   
+  };
 
   return (
     <Formik
@@ -59,6 +60,6 @@ const SubmitReviewForm = () => {
       )}
     </Formik>
   );
-}; 
+};
 
 export default SubmitReviewForm;

@@ -1,22 +1,38 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+=======
+import React, { useState, useEffect } from 'react';
+import api from '../Services/Api';
+>>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
 
 const JoinBookClub = () => {
   const [bookClubs, setBookClubs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBookClubs = async () => {
       try {
+<<<<<<< HEAD
         const response = await axios.get(`http://127.0.0.1:5000/bookclubs`);
         setBookClubs(response.data);
       } catch (error) {
         console.error("Error fetching book clubs:", error);
+=======
+        const response = await api.get('/book-clubs');
+        setBookClubs(response.data);
+      } catch (error) {
+        console.error('Error fetching book clubs:', error);
+      } finally {
+        setLoading(false);
+>>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
       }
     };
 
     fetchBookClubs();
   }, []);
 
+<<<<<<< HEAD
   const handleJoin = async (clubId) => {
     try {
       const response = await axios.post(
@@ -34,6 +50,9 @@ const JoinBookClub = () => {
       }
     }
   };
+=======
+  if (loading) return <div>Loading...</div>;
+>>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
 
   return (
     <div>
@@ -55,4 +74,8 @@ const JoinBookClub = () => {
   );
 };
 
+<<<<<<< HEAD
 export default JoinBookClub;
+=======
+export default JoinBookClub;
+>>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727

@@ -1,0 +1,14 @@
+/* BookForm.css */
+
+.book-form {
+    margin: 20px 0;
+  }
+  
+  .book-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .book-form input {
+    margin-bottom: 15px;
+  }

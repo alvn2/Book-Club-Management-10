@@ -1,4 +1,6 @@
 import React from 'react';
+import './Home.css';
+
 const Home = () => {
   return (
     <div className="home">
@@ -12,12 +14,13 @@ const Home = () => {
       <div className="features">
         <h2>Find Your Book People</h2>
         <p>Discover clubs that align with your reading interests.</p>
-        </div>
-        <div className="features">
-          <h2>Share Your Love of Reading</h2>
-          <p>Connect with fellow book lovers and make new friends.</p>
-        </div>
       </div>
+      <div className="features">
+        <h2>Share Your Love of Reading</h2>
+        <p>Connect with fellow book lovers and make new friends.</p>
+      </div>
+    </div>
   );
-}; 
+};
+
 export default Home;

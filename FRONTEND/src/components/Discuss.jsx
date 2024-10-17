@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Discuss.css';
 
 const Discuss = () => {
   const [discussions, setDiscussions] = useState([]);
@@ -8,14 +9,13 @@ const Discuss = () => {
     e.preventDefault();
     if (newDiscussion.trim()) {
       setDiscussions([...discussions, newDiscussion]);
-      setNewDiscussion(''); // Clear the input
+      setNewDiscussion('');
     }
   };
 
   return (
     <div>
       <h2>Discussions</h2>
-      
       <form onSubmit={handleAddDiscussion}>
         <input
           type="text"
@@ -26,7 +26,6 @@ const Discuss = () => {
         />
         <button type="submit">Add Discussion</button>
       </form>
-      
       <ul>
         {discussions.map((discussion, index) => (
           <li key={index}>{discussion}</li>

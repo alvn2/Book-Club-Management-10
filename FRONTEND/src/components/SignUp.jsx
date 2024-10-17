@@ -3,15 +3,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios for making requests
 import "./SignUp.css";
 
-function SignUp() {
+const SignUp = ({ onSignUp }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+<<<<<<< HEAD
   const [error, setError] = useState(null); // State for error messages
   const [loading, setLoading] = useState(false); // Loading state
+=======
+  const [error, setError] = useState("");
+>>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +27,7 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     setLoading(true); // Start loading
     setError(null); // Reset any previous errors
 
@@ -41,6 +46,16 @@ function SignUp() {
       }
     } finally {
       setLoading(false); // Stop loading
+=======
+    // Simulate API call to save user data
+    console.log("Form submitted:", formData);
+
+    if (typeof onSignUp === "function") {
+      onSignUp(formData); 
+      navigate("/");
+    } else {
+      setError("Signup function is not defined.");
+>>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
     }
   };
 
@@ -82,13 +97,18 @@ function SignUp() {
             required
           />
         </div>
+<<<<<<< HEAD
         <button type="submit" disabled={loading}>
           {loading ? "Signing Up..." : "Sign Up"}{" "}
           {/* Button text changes based on loading state */}
         </button>
+=======
+        {error && <p className="error-message">{error}</p>}
+        <button type="submit">Sign Up</button>
+>>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
       </form>
     </div>
   );
-}
+};
 
 export default SignUp;

@@ -10,8 +10,8 @@ function Navbar() {
         <Link to="/discuss">Discuss</Link>
         <Link to="/create-bookclub">Create a Book Club</Link>
         <Link to="/bookclubs">Book Clubs</Link>
-        <Link to="/signIn">signIn</Link>
-        <Link to="/signUp">signUp</Link>
+        <Link to="/signin">Sign In</Link>
+        <Link to="/signup">Sign Up</Link>
       </nav>
     );
 }

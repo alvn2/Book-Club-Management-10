@@ -1,0 +1,19 @@
+/* Discuss.css */
+
+.discuss {
+    margin: 20px 0;
+  }
+  
+  .discuss form {
+    margin-bottom: 20px;
+  }
+  
+  .discuss input {
+    width: calc(100% - 120px); /* Adjust width for button */
+    display: inline-block;
+  }
+  
+  .discuss button {
+    display: inline-block;
+    margin-left: 10px;
+  }

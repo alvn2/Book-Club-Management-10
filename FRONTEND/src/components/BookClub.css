@@ -1,0 +1,24 @@
+/* BookClub.css */
+
+.book-club {
+    margin: 20px 0;
+  }
+  
+  .book-club h2 {
+    margin-bottom: 20px;
+  }
+  
+  .book-club ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .book-club li {
+    margin-bottom: 10px;
+  }
+  
+  .book-club li::before {
+    content: "\2713"; /* Checkmark symbol */
+    margin-right: 10px;
+    color: #007bff;
+  }
