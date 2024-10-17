@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const BookList = () => {
   const { clubId } = useParams(); // Get clubId from the URL
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(`/api/bookclubs/${clubId}/books`); // Adjust API endpoint as necessary
+        const response = await axios.get(
+          `http://127.0.0.1:5000/bookclubs/${clubId}/books`
+        ); // Adjust API endpoint as necessary
         setBooks(response.data); // Assuming the response is an array of books
       } catch (err) {
-        setError('Error fetching books. Please try again.');
+        setError("Error fetching books. Please try again.");
       } finally {
         setLoading(false);
       }
