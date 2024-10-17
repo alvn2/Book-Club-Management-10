@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
 const AddBookForm = ({ clubId }) => {
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
-    title: '',
-    author: '',
+    title: "",
+    author: "",
   };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Required'),
-    author: Yup.string().required('Required'),
+    title: Yup.string().required("Required"),
+    author: Yup.string().required("Required"),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post(`/api/book-clubs/${clubId}/books`, values);
-      setSuccessMessage('Book added successfully!');
+      const response = await axios.post(
+        `http://127.0.0.1:5000/add-book`,
+        values
+      );
+      setSuccessMessage("Book added successfully!");
       setSubmitting(false);
     } catch (error) {
-      setErrorMessage('Error adding book. Please try again.');
+      setErrorMessage("Error adding book. Please try again.");
       setSubmitting(false);
     }
   };

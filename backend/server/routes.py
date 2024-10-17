@@ -1,6 +1,6 @@
 from server import app, bcrypt, db
 from server.models import Users, Bookclub, Book, Comments, Membership
-from flask import request, jsonify
+from flask import request, jsonify, redirect, url_for
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
@@ -9,7 +9,7 @@ def home():
     return jsonify({'message': f'{current_user.username}!'}), 200
 
 
-@app.route('/signUp', methods=['POST'])
+@app.route('/signUp', methods=['POST', 'GET'])
 def register():
     if current_user.is_authenticated:
         return jsonify({'message': 'User already logged in!'}), 200
@@ -20,6 +20,7 @@ def register():
         return jsonify({'errors': {'email': 'Email already registered. Please choose a different one'}}), 400
 
     hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+
     user = Users(
         username=data['name'],
         email=data['email'],
@@ -30,17 +31,20 @@ def register():
     return jsonify({'message': f'User {data["name"]} registered successfully!'}), 201
 
 
-@app.route('/signIn', methods=['POST', 'GET'])
+@app.route('/signIn', methods=['POST'])
 def login():
     if current_user.is_authenticated:
         return jsonify({'message': 'User already logged in!'}), 200
+
     data = request.get_json()
     user = Users.query.filter_by(email=data['email']).first()
+
     if user and bcrypt.check_password_hash(user.password, data['password']):
         login_user(user)
-        return jsonify({'message': f'User {user.username} logged in successfully!'}), 200
+        return jsonify({'username': user.username, 'role': user.role}), 200
     else:
         return jsonify({'message': 'Login failed, please check your email or password.'}), 401
+    
     
 @app.route('/logout')
 def logout():
@@ -48,7 +52,7 @@ def logout():
     return jsonify({'message': 'User logged out successfully!'}), 200
 
 @app.route('/create-bookclub', methods=['POST', 'GET'])
-@login_required
+#@login_required
 def add_bookclub():
     data = request.get_json()
     bookclub = Bookclub(
@@ -61,7 +65,7 @@ def add_bookclub():
     return jsonify({'message': f'Bookclub {data["name"]} added successfully!'}), 201
 
 @app.route('/bookclubs')
-@login_required
+#@login_required
 def get_bookclubs():
     bookclubs = Bookclub.query.all()
     bookcluns_list = []
@@ -75,11 +79,12 @@ def get_bookclubs():
         bookcluns_list.append(bookclub_dict)
     return jsonify(bookcluns_list), 200
 
-@app.route('/bookclub/<int:id>')
-@login_required
+@app.route('/bookclubs/<int:id>')
+#@login_required
 def get_bookclub(id):
     bookclub = Bookclub.query.get_or_404(id)   
     bookclub_dict = {
+        'id': bookclub.id,
         'name': bookclub.name,
         'description': bookclub.description,
         'owner': bookclub.owner.username

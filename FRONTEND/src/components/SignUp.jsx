@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import axios for making requests
 import "./SignUp.css";
 
 function SignUp() {
@@ -9,6 +10,8 @@ function SignUp() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState(null); // State for error messages
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,17 +21,33 @@ function SignUp() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Save the formData to backend or localStorage as per your authentication setup
-    console.log(formData);
-    // Redirect to Job Seeker Dashboard after signup
-    navigate("/home");
+    setLoading(true); // Start loading
+    setError(null); // Reset any previous errors
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:5000/signUp",
+        formData
+      ); // Make POST request to Flask backend
+      console.log(response.data); // Log success response
+      navigate("/home"); // Redirect to home page on success
+    } catch (err) {
+      if (err.response && err.response.data.errors) {
+        setError(err.response.data.errors.email); // Set specific error message
+      } else {
+        setError("Something went wrong. Please try again."); // Generic error message
+      }
+    } finally {
+      setLoading(false); // Stop loading
+    }
   };
 
   return (
     <div className="signup-page">
       <h2>Sign Up</h2>
+      {error && <p className="error">{error}</p>} {/* Display error message */}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -63,7 +82,10 @@ function SignUp() {
             required
           />
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Signing Up..." : "Sign Up"}{" "}
+          {/* Button text changes based on loading state */}
+        </button>
       </form>
     </div>
   );

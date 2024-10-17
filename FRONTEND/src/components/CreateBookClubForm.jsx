@@ -21,7 +21,10 @@ const CreateBookClubForm = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post("/api/book-clubs", values);
+      const response = await axios.post(
+        "http://127.0.0.1:5000/create-bookclub",
+        values
+      );
       setSuccessMessage("Book club created successfully!");
       setSubmitting(false);
       navigate("/book-clubs"); // Navigate to book clubs page

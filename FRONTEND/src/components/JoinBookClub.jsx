@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const JoinBookClub = () => {
   const [bookClubs, setBookClubs] = useState([]);
@@ -7,10 +7,12 @@ const JoinBookClub = () => {
   useEffect(() => {
     const fetchBookClubs = async () => {
       try {
-        const response = await axios.get('/api/book-clubs'); // Adjust this endpoint as needed
+        const response = await axios.get(
+          `http://127.0.0.1:5000/bookclub/${clubId}/join`
+        );
         setBookClubs(response.data);
       } catch (error) {
-        console.error('Error fetching book clubs:', error);
+        console.error("Error fetching book clubs:", error);
       }
     };
 
@@ -36,5 +38,5 @@ const JoinBookClub = () => {
     </div>
   );
 };
- 
+
 export default JoinBookClub;

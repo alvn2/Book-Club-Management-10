@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const BookClubList = () => {
   const [bookClubs, setBookClubs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBookClubs = async () => {
       try {
-        const response = await axios.get('/api/bookclubs'); // Ensure this endpoint is correct
+        const response = await axios.get("http://127.0.0.1:5000/bookclubs");
         setBookClubs(response.data);
       } catch (error) {
-        setError('Error fetching book clubs. Please try again.');
+        setError("Error fetching book clubs. Please try again.");
       } finally {
         setLoading(false);
       }

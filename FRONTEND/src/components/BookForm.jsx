@@ -1,36 +1,34 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import api from '../services/api'; 
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import api from "../services/api";
 
 const BookForm = ({ clubId }) => {
-  
   const validationSchema = Yup.object({
-    title: Yup.string().required('Title is required'),
-    author: Yup.string().required('Author is required'),
+    title: Yup.string().required("Title is required"),
+    author: Yup.string().required("Author is required"),
     yearPublished: Yup.number()
-      .required('Year is required')
-      .min(1800, 'Year must be after 1800')
+      .required("Year is required")
+      .min(1800, "Year must be after 1800")
       .max(new Date().getFullYear(), `Year can't be in the future`),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      
       await api.post(`/bookclubs/${clubId}/books`, values);
-      alert('Book added successfully!');
-      resetForm(); 
+      alert("Book added successfully!");
+      resetForm();
     } catch (error) {
-      console.error('Error adding book:', error);
-      alert('Failed to add the book. Please try again.');
+      console.error("Error adding book:", error);
+      alert("Failed to add the book. Please try again.");
     } finally {
-      setSubmitting(false); 
+      setSubmitting(false);
     }
   };
 
   return (
     <Formik
-      initialValues={{ title: '', author: '', yearPublished: '' }}
+      initialValues={{ title: "", author: "", yearPublished: "" }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >

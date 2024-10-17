@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import api from '../Services/Api';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import api from "../Services/Api";
 
 const BookDetail = () => {
   const { id } = useParams();
   const [bookClub, setBookClub] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBookClub = async () => {
       setLoading(true);
       try {
-        const response = await api.get(`/bookclubs/${id}`);
+        const response = await api.get(`http://127.0.0.1:5000/bookclubs/${id}`);
         setBookClub(response.data);
       } catch (error) {
-        console.error('Error fetching book club details:', error);
-        setError('Error fetching book club details. Please try again later.');
+        console.error("Error fetching book club details:", error);
+        setError("Error fetching book club details. Please try again later.");
       } finally {
         setLoading(false);
       }
