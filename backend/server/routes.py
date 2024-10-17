@@ -8,27 +8,29 @@ from flask_login import login_user, current_user, logout_user, login_required
 def home():
     return jsonify({'message': f'{current_user.username}!'}), 200
 
-@app.route('/register', methods=['POST', 'GET'])
+
+@app.route('/signUp', methods=['POST'])
 def register():
     if current_user.is_authenticated:
         return jsonify({'message': 'User already logged in!'}), 200
+    
     data = request.get_json()
 
     if Users.query.filter_by(email=data['email']).first():
-        return jsonify({'errors': {'email': 'Email already registered. please choose a different one'}}), 400
+        return jsonify({'errors': {'email': 'Email already registered. Please choose a different one'}}), 400
 
     hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
     user = Users(
-        username = data['username'],
-        email = data['email'],
-        image_file = data['image_file'],
-        password = hashed_password
-        ) 
+        username=data['name'],
+        email=data['email'],
+        password=hashed_password
+    ) 
     db.session.add(user)
     db.session.commit()
-    return jsonify({'message': f'User {data["username"]} registered successfully!'}), 201
+    return jsonify({'message': f'User {data["name"]} registered successfully!'}), 201
 
-@app.route('/login', methods=['POST', 'GET'])
+
+@app.route('/signIn', methods=['POST', 'GET'])
 def login():
     if current_user.is_authenticated:
         return jsonify({'message': 'User already logged in!'}), 200
@@ -45,7 +47,7 @@ def logout():
     logout_user()
     return jsonify({'message': 'User logged out successfully!'}), 200
 
-@app.route('/New-bookclub', methods=['POST', 'GET'])
+@app.route('/create-bookclub', methods=['POST', 'GET'])
 @login_required
 def add_bookclub():
     data = request.get_json()
@@ -65,6 +67,7 @@ def get_bookclubs():
     bookcluns_list = []
     for bookclub in bookclubs:
         bookclub_dict = {
+            'id': bookclub.id,
             'name': bookclub.name,
             'description': bookclub.description,
             'owner': bookclub.owner.username
