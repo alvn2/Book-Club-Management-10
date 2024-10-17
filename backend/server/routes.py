@@ -28,6 +28,7 @@ def register():
     ) 
     db.session.add(user)
     db.session.commit()
+    login_user(user)
     return jsonify({'message': f'User {data["name"]} registered successfully!'}), 201
 
 
@@ -70,25 +71,30 @@ def get_bookclubs():
     bookclubs = Bookclub.query.all()
     bookcluns_list = []
     for bookclub in bookclubs:
+        owner_username = bookclub.owner.username if bookclub.owner else "Unknown"
         bookclub_dict = {
             'id': bookclub.id,
             'name': bookclub.name,
             'description': bookclub.description,
-            'owner': bookclub.owner.username
+            'owner': owner_username
         }
         bookcluns_list.append(bookclub_dict)
     return jsonify(bookcluns_list), 200
 
 @app.route('/bookclubs/<int:id>')
-#@login_required
+# @login_required
 def get_bookclub(id):
     bookclub = Bookclub.query.get_or_404(id)   
+    books = [{"id": book.id, "title": book.book_title, "author": book.book_author} for book in bookclub.books]
+
     bookclub_dict = {
         'id': bookclub.id,
         'name': bookclub.name,
         'description': bookclub.description,
-        'owner': bookclub.owner.username
-        }
+        'owner': bookclub.owner.username,
+        'books': books  # Include the list of books
+    }
+    
     return jsonify(bookclub_dict), 200
 
 @app.route('/bookclub/<int:id>/join', methods=['POST', 'GET'])

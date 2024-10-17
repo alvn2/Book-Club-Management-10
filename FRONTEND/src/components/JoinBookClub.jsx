@@ -7,9 +7,7 @@ const JoinBookClub = () => {
   useEffect(() => {
     const fetchBookClubs = async () => {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:5000/bookclub/${clubId}/join`
-        );
+        const response = await axios.get(`http://127.0.0.1:5000/bookclubs`);
         setBookClubs(response.data);
       } catch (error) {
         console.error("Error fetching book clubs:", error);
@@ -18,6 +16,24 @@ const JoinBookClub = () => {
 
     fetchBookClubs();
   }, []);
+
+  const handleJoin = async (clubId) => {
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:5000/bookclub/${clubId}/join`
+      );
+      alert(response.data.message); // Alert the success message
+    } catch (error) {
+      if (error.response) {
+        // Handle specific errors from the server
+        alert(
+          error.response.data.message || "An error occurred. Please try again."
+        );
+      } else {
+        alert("An error occurred. Please try again.");
+      }
+    }
+  };
 
   return (
     <div>

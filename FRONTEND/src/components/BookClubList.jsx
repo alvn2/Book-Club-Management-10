@@ -9,10 +9,12 @@ const BookClubList = () => {
 
   useEffect(() => {
     const fetchBookClubs = async () => {
+      setLoading(true);
       try {
         const response = await axios.get("http://127.0.0.1:5000/bookclubs");
         setBookClubs(response.data);
       } catch (error) {
+        console.error("Fetch error:", error);
         setError("Error fetching book clubs. Please try again.");
       } finally {
         setLoading(false);
@@ -24,6 +26,7 @@ const BookClubList = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
+  if (bookClubs.length === 0) return <div>No book clubs available.</div>;
 
   return (
     <div>

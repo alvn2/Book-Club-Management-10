@@ -39,11 +39,11 @@ with app.app_context():
     Users.query.delete()
     
     print ("Creating user list...")
-    user1 = Users(username="admin", email="admin@book-list.com", password="testing", image_file="default.png")
-    user2 = Users(username="user", email="second@gmail.com", password="testing", image_file="default.png")
-    user3 = Users(username="user2", email="third@gmail.com", password="testing", image_file="default.png")
-    user4 = Users(username="user3", email="fourth@gmail.com", password="testing", image_file="default.png")
-    user5 = Users(username="user4", email="fifth@gmail.com", password="testing", image_file="default.png")
+    user1 = Users(username="admin", email="admin@book-list.com", password="testing")
+    user2 = Users(username="user", email="second@gmail.com", password="testing")
+    user3 = Users(username="user2", email="third@gmail.com", password="testing")
+    user4 = Users(username="user3", email="fourth@gmail.com", password="testing")
+    user5 = Users(username="user4", email="fifth@gmail.com", password="testing")
 
     users = [user1, user2, user3, user4, user5]
 
