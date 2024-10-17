@@ -10,12 +10,8 @@ const SignUp = ({ onSignUp }) => {
     email: "",
     password: "",
   });
-<<<<<<< HEAD
   const [error, setError] = useState(null); // State for error messages
   const [loading, setLoading] = useState(false); // Loading state
-=======
-  const [error, setError] = useState("");
->>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +23,6 @@ const SignUp = ({ onSignUp }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
     setLoading(true); // Start loading
     setError(null); // Reset any previous errors
 
@@ -46,16 +41,6 @@ const SignUp = ({ onSignUp }) => {
       }
     } finally {
       setLoading(false); // Stop loading
-=======
-    // Simulate API call to save user data
-    console.log("Form submitted:", formData);
-
-    if (typeof onSignUp === "function") {
-      onSignUp(formData); 
-      navigate("/");
-    } else {
-      setError("Signup function is not defined.");
->>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
     }
   };
 
@@ -97,15 +82,10 @@ const SignUp = ({ onSignUp }) => {
             required
           />
         </div>
-<<<<<<< HEAD
         <button type="submit" disabled={loading}>
           {loading ? "Signing Up..." : "Sign Up"}{" "}
           {/* Button text changes based on loading state */}
         </button>
-=======
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit">Sign Up</button>
->>>>>>> e55f94ab49dd1e580fb122e032d660fcc7afc727
       </form>
     </div>
   );
