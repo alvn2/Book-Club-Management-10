@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
 import "./SignUp.css";
 
-<<<<<<< HEAD
-function SignUp() {
-=======
 const SignUp = () => {
->>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -34,17 +30,11 @@ const SignUp = () => {
       const response = await axios.post(
         "http://127.0.0.1:5000/signUp",
         formData
-<<<<<<< HEAD
-      ); // Make POST request to Flask backend
-      console.log(response.data); // Log success response
-      navigate("/"); // Redirect to home page on success
-=======
       ); 
 
       console.log(response.data); 
       // Redirect after successful sign-up
       navigate("/home");
->>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
     } catch (err) {
       if (err.response && err.response.data.errors) {
         setError(err.response.data.errors.email); 
@@ -100,6 +90,6 @@ const SignUp = () => {
       </form>
     </div>
   );
-}
+};
 
 export default SignUp;

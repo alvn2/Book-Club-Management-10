@@ -103,9 +103,3 @@ The app uses React's Context API for managing authentication state. The `AuthCon
 ## Validation
 Form validation is handled using Yup schemas. Separate validation schemas are defined for book forms and review forms in the `validationSchemas.js` file.
 
-
-## License
-
-
-## Contact
-(Contact information for the project maintainer or team)
