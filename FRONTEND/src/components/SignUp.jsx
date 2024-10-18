@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
 import "./SignUp.css";
 
-const SignUp = ({ onSignUp }) => {
+const SignUp = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -31,7 +31,9 @@ const SignUp = ({ onSignUp }) => {
         "http://127.0.0.1:5000/signUp",
         formData
       ); 
+
       console.log(response.data); 
+      // Redirect after successful sign-up
       navigate("/home");
     } catch (err) {
       if (err.response && err.response.data.errors) {
