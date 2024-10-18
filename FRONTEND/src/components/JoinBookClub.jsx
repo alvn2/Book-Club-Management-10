@@ -23,7 +23,7 @@ const JoinBookClub = () => {
       const response = await axios.post(
         `http://127.0.0.1:5000/bookclub/${clubId}/join`
       );
-      alert(response.data.message); // Alert the success message
+      alert(response.data.message); 
     } catch (error) {
       if (error.response) {
         alert(

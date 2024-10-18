@@ -4,7 +4,11 @@ import axios from "axios";
 import "./BookList.css";
 
 const BookList = () => {
+<<<<<<< HEAD
   const { clubId } = useParams();
+=======
+  const { clubId } = useParams(); 
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -12,8 +16,15 @@ const BookList = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
+<<<<<<< HEAD
         const response = await axios.get(`http://127.0.0.1:5000/booklist`);
         setBooks(response.data);
+=======
+        const response = await axios.get(
+          `http://127.0.0.1:5000/bookclubs/${clubId}/books`
+        ); 
+        setBooks(response.data); 
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
       } catch (err) {
         setError("Error fetching books. Please try again.");
       } finally {

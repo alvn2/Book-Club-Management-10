@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .book-form-container {
   max-width: 500px;
   margin: 20px auto;
@@ -59,3 +60,17 @@ textarea:focus {
 .submit-button:disabled {
   background-color: #7f8c8d;
 }
+=======
+.book-form {
+    margin: 20px 0;
+  }
+  
+  .book-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .book-form input {
+    margin-bottom: 15px;
+  }
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1

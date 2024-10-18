@@ -8,7 +8,11 @@ const AddBook = () => {
   return (
     <div>
       <h2>Add a New Book</h2>
+<<<<<<< HEAD
       <BookForm clubId={clubId} />
+=======
+      <BookForm clubId={clubId} /> 
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
     </div>
   );
 };

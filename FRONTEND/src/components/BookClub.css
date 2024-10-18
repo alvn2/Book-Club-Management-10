@@ -1,6 +1,5 @@
-/* BookClub.css */
-
 .book-club {
+<<<<<<< HEAD
   margin: 20px 0;
 }
 
@@ -22,3 +21,26 @@
   margin-right: 10px;
   color: #007bff;
 }
+=======
+    margin: 20px 0;
+  }
+  
+  .book-club h2 {
+    margin-bottom: 20px;
+  }
+  
+  .book-club ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .book-club li {
+    margin-bottom: 10px;
+  }
+  
+  .book-club li::before {
+    content: "\2713";
+    margin-right: 10px;
+    color: #007bff;
+  }
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
