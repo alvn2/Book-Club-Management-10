@@ -24,10 +24,6 @@ const BookClubList = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-<<<<<<< HEAD
-=======
-  if (bookClubs.length === 0) return <div>No book clubs available.</div>;
->>>>>>> f62d0766a5f65d724900a59a2eefd23bac75ab91
 
   return (
     <div className="container">
