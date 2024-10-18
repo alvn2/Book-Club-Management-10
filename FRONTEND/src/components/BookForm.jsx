@@ -2,20 +2,18 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 //import api from "../services/api";
+import "./BookForm.css";
 
 const BookForm = ({ clubId }) => {
   const validationSchema = Yup.object({
-    title: Yup.string().required("Title is required"),
-    author: Yup.string().required("Author is required"),
-    yearPublished: Yup.number()
-      .required("Year is required")
-      .min(1800, "Year must be after 1800")
-      .max(new Date().getFullYear(), `Year can't be in the future`),
+    book_title: Yup.string().required("Title is required"),
+    book_author: Yup.string().required("Author is required"),
+    description: Yup.string().required("Description is required"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      await api.post(`/bookclubs/${clubId}/books`, values);
+      await api.post(`/addbook/`, { ...values, book_club_id: clubId });
       alert("Book added successfully!");
       resetForm();
     } catch (error) {
@@ -27,37 +25,56 @@ const BookForm = ({ clubId }) => {
   };
 
   return (
-    <Formik
-      initialValues={{ title: "", author: "", yearPublished: "" }}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <div>
-            <label htmlFor="title">Title</label>
-            <Field type="text" name="title" />
-            <ErrorMessage name="title" component="div" />
-          </div>
+    <div className="book-form-container">
+      <h2>Add a New Book</h2>
+      <Formik
+        initialValues={{ book_title: "", book_author: "", description: "" }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <div className="form-group">
+              <label htmlFor="book_title">Title</label>
+              <Field type="text" name="book_title" />
+              <ErrorMessage
+                name="book_title"
+                component="div"
+                className="error"
+              />
+            </div>
 
-          <div>
-            <label htmlFor="author">Author</label>
-            <Field type="text" name="author" />
-            <ErrorMessage name="author" component="div" />
-          </div>
+            <div className="form-group">
+              <label htmlFor="book_author">Author</label>
+              <Field type="text" name="book_author" />
+              <ErrorMessage
+                name="book_author"
+                component="div"
+                className="error"
+              />
+            </div>
 
-          <div>
-            <label htmlFor="yearPublished">Year Published</label>
-            <Field type="number" name="yearPublished" />
-            <ErrorMessage name="yearPublished" component="div" />
-          </div>
+            <div className="form-group">
+              <label htmlFor="description">Description</label>
+              <Field as="textarea" name="description" />
+              <ErrorMessage
+                name="description"
+                component="div"
+                className="error"
+              />
+            </div>
 
-          <button type="submit" disabled={isSubmitting}>
-            Add Book
-          </button>
-        </Form>
-      )}
-    </Formik>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="submit-button"
+            >
+              Add Book
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

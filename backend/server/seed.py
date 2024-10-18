@@ -54,9 +54,9 @@ with app.app_context():
     # Creating Books
     print("Creating book list...")
     book_titles_authors_images = [
-        ("The Midnight Library", "Matt Haig", "https://images-na.ssl-images-amazon.com/images/I/81R1mR0v-OL.jpg"),
-        ("Circe", "Madeline Miller", "https://images-na.ssl-images-amazon.com/images/I/81aVZvD5l0L.jpg"),
-        ("The Silent Patient", "Alex Michaelides", "https://images-na.ssl-images-amazon.com/images/I/71z5A9MsA5L.jpg"),
+        ("The Midnight Library", "Matt Haig", "https://m.media-amazon.com/images/I/71lLxCyq4EL._UF894,1000_QL80_.jpg"),
+        ("Circe", "Madeline Miller", "https://m.media-amazon.com/images/I/81GiM5OhweL._AC_UF894,1000_QL80_.jpg"),
+        ("The Silent Patient", "Alex Michaelides", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9CgUpPheEFJonz2Nc3feDrtSqxevTU5SdtA&s"),
         ("The Vanishing Half", "Brit Bennett", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn5PGD5nl7I3ZZsC1xvyldt15xN9N6vkKPLg&s"),
         ("Daisy Jones & The Six", "Taylor Jenkins Reid", "https://m.media-amazon.com/images/I/811mH+xbvwL._AC_UF894,1000_QL80_.jpg"),
         ("Where the Crawdads Sing", "Delia Owens", "https://i1.sndcdn.com/artworks-000369828696-6hx9pu-t500x500.jpg"),

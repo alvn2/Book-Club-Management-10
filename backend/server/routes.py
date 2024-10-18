@@ -106,7 +106,7 @@ def join_bookclub(id):
     db.session.commit()
     return jsonify({'message': 'You have successfully joined the book club!'}), 201
 
-@app.route('/add-book/', methods=['POST', 'GET'])
+@app.route('/addbook/', methods=['POST', 'GET'])
 @login_required
 def add_book():
     data = request.get_json()
@@ -121,8 +121,8 @@ def add_book():
     db.session.commit()
     return jsonify({'message': f'Book {data["book_title"]} added successfully!'}), 201
 
-@app.route('/books')
-@login_required
+@app.route('/booklist')
+#@login_required
 def get_books():
     books = Book.query.all()
     books_list = []
@@ -131,7 +131,9 @@ def get_books():
             'book_title': book.book_title,
             'book_author': book.book_author,
             'description': book.description,
-            'book_club_id': book.book_club_id
+            'book_club_id': book.book_club_id,
+            'book_image': book.book_image,
+            'comments': [{'id': comment.id, 'user': comment.user.username, 'content': comment.content} for comment in book.comments]
             }
         books_list.append(book_dict)
     return jsonify(books_list), 200

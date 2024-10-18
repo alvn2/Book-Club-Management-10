@@ -14,6 +14,8 @@ import "./App.css";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import { AuthProvider } from "./contexts/AuthContext";
+import BookList from "./components/BookList";
+import BookForm from "./components/BookForm";
 
 const App = () => {
   return (
@@ -30,6 +32,8 @@ const App = () => {
               <Route path="/join-bookclub" element={<JoinBookClub />} />
               <Route path="/discuss" element={<Discuss />} />
               <Route path="/bookclubs" element={<BookClubList />} />
+              <Route path="/booklist" element={<BookList />} />
+              <Route path="/addbook" element={<BookForm />} />
               <Route path="/bookclubs/:id" element={<BookClubDetail />} />
               <Route
                 path="/bookclubs/:clubId/add-book"
