@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; 
+import axios from "axios";
 import "./SignUp.css";
 
-<<<<<<< HEAD
-function SignUp() {
-=======
-const SignUp = () => {
->>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
+const SignUp = ({ onSignUp }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const [error, setError] = useState(null); 
-  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,39 +23,31 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); 
-    setError(null); 
+    setLoading(true);
+    setError(null);
 
     try {
       const response = await axios.post(
         "http://127.0.0.1:5000/signUp",
         formData
-<<<<<<< HEAD
-      ); // Make POST request to Flask backend
-      console.log(response.data); // Log success response
-      navigate("/"); // Redirect to home page on success
-=======
-      ); 
-
-      console.log(response.data); 
-      // Redirect after successful sign-up
+      );
+      console.log(response.data);
       navigate("/home");
->>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
     } catch (err) {
       if (err.response && err.response.data.errors) {
-        setError(err.response.data.errors.email); 
+        setError(err.response.data.errors.email);
       } else {
-        setError("Something went wrong. Please try again."); 
+        setError("Something went wrong. Please try again.");
       }
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   return (
     <div className="signup-page">
       <h2>Sign Up</h2>
-      {error && <p className="error">{error}</p>} 
+      {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -100,6 +88,6 @@ const SignUp = () => {
       </form>
     </div>
   );
-}
+};
 
 export default SignUp;
