@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../Services/Api";
 import axios from "axios";
+=======
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import api from '../Services/Api';
+>>>>>>> f62d0766a5f65d724900a59a2eefd23bac75ab91
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -30,6 +36,10 @@ const BookDetail = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
+<<<<<<< HEAD
+=======
+  if (!bookClub) return <div>No book club found.</div>;
+>>>>>>> f62d0766a5f65d724900a59a2eefd23bac75ab91
 
   return (
     <div>

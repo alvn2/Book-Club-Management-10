@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+<<<<<<< HEAD
 import "./JoinBookClub.css"; // Import the CSS file
+=======
+>>>>>>> f62d0766a5f65d724900a59a2eefd23bac75ab91
 
 const JoinBookClub = () => {
   const [bookClubs, setBookClubs] = useState([]);

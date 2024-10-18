@@ -1,10 +1,18 @@
+<<<<<<< HEAD
+=======
+// SignIn.jsx
+>>>>>>> f62d0766a5f65d724900a59a2eefd23bac75ab91
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import "./SignIn.css";
 
+<<<<<<< HEAD
 const SignIn = () => {
   const { login, error } = useAuth();
+=======
+const SignIn = ({ onLogin }) => {
+>>>>>>> f62d0766a5f65d724900a59a2eefd23bac75ab91
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

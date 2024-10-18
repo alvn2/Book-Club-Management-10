@@ -105,6 +105,7 @@ li {
   padding: 0.5rem 0;
   border-bottom: 1px solid #dee2e6;
 }
+<<<<<<< HEAD
 
 .container {
   max-width: 800px;
@@ -215,3 +216,5 @@ li {
 .book-club-link:hover {
   text-decoration: underline;
 }
+=======
+>>>>>>> f62d0766a5f65d724900a59a2eefd23bac75ab91
