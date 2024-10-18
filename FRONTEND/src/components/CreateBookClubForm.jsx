@@ -7,11 +7,7 @@ import { useNavigate } from "react-router-dom";
 const CreateBookClubForm = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-<<<<<<< HEAD
   const navigate = useNavigate();
-=======
-  const navigate = useNavigate(); 
->>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
 
   const initialValues = {
     name: "",
@@ -31,11 +27,7 @@ const CreateBookClubForm = () => {
       );
       setSuccessMessage("Book club created successfully!");
       setSubmitting(false);
-<<<<<<< HEAD
       navigate("/bookclubs");
-=======
-      navigate("/book-clubs"); 
->>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
     } catch (error) {
       setErrorMessage("Error creating book club. Please try again.");
       setSubmitting(false);
