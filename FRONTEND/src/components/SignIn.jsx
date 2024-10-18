@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import "./SignIn.css";
 
-const SignIn = ({ onLogin }) => {
+const SignIn = () => {
+  const { login, error } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+<<<<<<< HEAD
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const isLoggedIn = await login(username, password);
+    if (isLoggedIn) {
+      navigate("/");
+    } else {
+      setErrorMessage("Invalid username or password");
+    }
+=======
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
@@ -44,6 +58,7 @@ const SignIn = ({ onLogin }) => {
       .finally(() => {
         setLoading(false); // End loading
       });
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
   };
 
   return (
@@ -56,7 +71,11 @@ const SignIn = ({ onLogin }) => {
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
+<<<<<<< HEAD
+            setErrorMessage("");
+=======
             setError(""); 
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
           }}
           placeholder="Enter your username"
         />
@@ -68,14 +87,26 @@ const SignIn = ({ onLogin }) => {
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
+<<<<<<< HEAD
+            setErrorMessage("");
+=======
             setError(""); 
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
           }}
           placeholder="Enter your password"
         />
       </div>
+<<<<<<< HEAD
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {error && <p className="error-message">{error}</p>}{" "}
+      {/* Display context error */}
+      <button onClick={handleLogin} className="login-button">
+        Log In
+=======
       {error && <p className="error-message">{error}</p>}
       <button onClick={handleLogin} className="login-button" disabled={loading}>
         {loading ? "Logging In..." : "Log In"}
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
       </button>
     </div>
   );

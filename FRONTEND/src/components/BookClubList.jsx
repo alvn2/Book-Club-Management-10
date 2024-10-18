@@ -9,12 +9,10 @@ const BookClubList = () => {
 
   useEffect(() => {
     const fetchBookClubs = async () => {
-      setLoading(true);
       try {
         const response = await axios.get("http://127.0.0.1:5000/bookclubs");
         setBookClubs(response.data);
       } catch (error) {
-        console.error("Fetch error:", error);
         setError("Error fetching book clubs. Please try again.");
       } finally {
         setLoading(false);
@@ -26,15 +24,16 @@ const BookClubList = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-  if (bookClubs.length === 0) return <div>No book clubs available.</div>;
 
   return (
-    <div>
-      <h2>Available Book Clubs </h2>
-      <ul>
+    <div className="container">
+      <h2 className="title">Available Book Clubs</h2>
+      <ul className="book-club-list">
         {bookClubs.map((club) => (
-          <li key={club.id}>
-            <Link to={`/book-clubs/${club.id}`}>{club.name}</Link>
+          <li key={club.id} className="book-club-item">
+            <Link to={`/bookclubs/${club.id}`} className="book-club-link">
+              {club.name}
+            </Link>
           </li>
         ))}
       </ul>

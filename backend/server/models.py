@@ -24,14 +24,15 @@ class Bookclub(db.Model):
     books = db.relationship('Book', back_populates='book_club', lazy=True)
 
     def __repr__(self):
-        return f"Bookclub('{self.name}', '{self.description}')"
+        return f"Bookclub('{self.name}', '{self.description}', '{self.books}')"
     
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    book_image = db.Column(db.Text, nullable=False, default='default.jpg')
     book_title = db.Column(db.String(50), nullable=False)
     book_author = db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    book_club_id = db.Column(db.Integer, db.ForeignKey('bookclub.id'),default=None)
+    book_club_id = db.Column(db.Integer, db.ForeignKey('bookclub.id'), default=None)
     book_club = db.relationship('Bookclub', back_populates='books', lazy=True)
 
     def __repr__(self):

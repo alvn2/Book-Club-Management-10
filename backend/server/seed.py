@@ -1,76 +1,118 @@
-#!/usr/bin/env python3
-
 from server import app, db
-from server.models import Book, Users, Bookclub
+
+from server.models import Book, Users, Bookclub, Comments, Membership
+import random
 
 with app.app_context():
-
+    # Deleting existing data
     print("Deleting data...")
+    Comments.query.delete()
+    Membership.query.delete()
     Book.query.delete()
-
-    print("Creating book list...")
-    book1 = Book(
-        book_title="The Great Gatsby", book_author="F. Scott Fitzgerald", 
-        description="The story of the mysteriously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.")
-    book2 = Book(
-        book_title="To Kill a Mockingbird", book_author="Harper Lee", 
-        description="The story of a young boy growing up in the South during the 1930s who learns about   the evils of racism and the importance of standing up for what is right.")
-    book3 = Book(
-        book_title="1984", book_author="George Orwell", 
-        description="The story of Winston Smith, a bold individual who decides to rebel against the oppressive government of Oceania.")
-    book4 = Book(
-        book_title="Pride and Prejudice", book_author="Jane Austen", 
-        description="The story of Elizabeth Bennet, a strong-willed kind lady who must navigate the social norms of her time.")
-    book5 = Book(
-        book_title="The Catcher in the Rye", book_author="J.D. Salinger", 
-        description="The story of Holden Caulfield and his journey through New York City after being expelled from his prep school.")
-    
-    books = [book1, book2, book3, book4, book5]
-  
-    print("Creating books...")
-
-   
-
-    print("Creating book list...")
-    db.session.add_all(books)
-    db.session.commit() 
-
-    print("Deleting data...")
+    Bookclub.query.delete()
     Users.query.delete()
-    
-    print ("Creating user list...")
-    user1 = Users(username="admin", email="admin@book-list.com", password="testing")
-    user2 = Users(username="user", email="second@gmail.com", password="testing")
-    user3 = Users(username="user2", email="third@gmail.com", password="testing")
-    user4 = Users(username="user3", email="fourth@gmail.com", password="testing")
-    user5 = Users(username="user4", email="fifth@gmail.com", password="testing")
 
-    users = [user1, user2, user3, user4, user5]
+    # Creating Users
+    print("Creating user list...")
+    users = []
+    for i in range(1, 11):  # Creating 10 users
+        user = Users(username=f"user{i}", email=f"user{i}@example.com", password="password")
+        users.append(user)
 
     print("Creating users...")
     db.session.add_all(users)
     db.session.commit()
 
-    print("Deleting data...")
-    Bookclub.query.delete()
+    # Updated Bookclub names
+    bookclub_names = [
+        "The Enchanted Library",
+        "Epic Reads Society",
+        "Whimsical Wordsmiths",
+        "Fiction Fanatics",
+        "The Book Nook",
+        "Readers' Retreat",
+        "Novel Notions",
+        "Page Turners",
+        "Bookworms United",
+        "The Literary Voyage"
+    ]
 
+    # Creating Bookclubs
     print("Creating bookclubs...")
-    bookclub1 = Bookclub(
-        name="Bookclub 1", description="A bookclub for the classics.", owner_id=1)
-    bookclub2 = Bookclub(
-        name="Bookclub 2", description="A bookclub for the modern reader.", owner_id=2)
-    bookclub3 = Bookclub(
-        name="Bookclub 3", description="A bookclub for the adventurous reader.", owner_id=3)
-    bookclub4 = Bookclub(
-        name="Bookclub 4", description="A bookclub for the romantic at heart.", owner_id=4)
-    bookclub5 = Bookclub(
-        name="Bookclub 5", description="A bookclub for the mystery lover.", owner_id=5)
-    
-    bookclubs = [bookclub1, bookclub2, bookclub3, bookclub4, bookclub5]
+    bookclubs = []
+    for i in range(len(bookclub_names)):  # Loop through the list of names
+        bookclub = Bookclub(
+            name=bookclub_names[i],
+            description=f"A cozy haven for lovers of literature.",
+            owner_id=random.choice([user.id for user in users])  # Random owner from the created users
+        )
+        bookclubs.append(bookclub)
 
-    print("Creating bookclubs...")
     db.session.add_all(bookclubs)
     db.session.commit()
 
+    # Creating Books
+    print("Creating book list...")
+    book_titles_authors_images = [
+        ("The Midnight Library", "Matt Haig", "https://m.media-amazon.com/images/I/71lLxCyq4EL._UF894,1000_QL80_.jpg"),
+        ("Circe", "Madeline Miller", "https://m.media-amazon.com/images/I/81GiM5OhweL._AC_UF894,1000_QL80_.jpg"),
+        ("The Silent Patient", "Alex Michaelides", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9CgUpPheEFJonz2Nc3feDrtSqxevTU5SdtA&s"),
+        ("The Vanishing Half", "Brit Bennett", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn5PGD5nl7I3ZZsC1xvyldt15xN9N6vkKPLg&s"),
+        ("Daisy Jones & The Six", "Taylor Jenkins Reid", "https://m.media-amazon.com/images/I/811mH+xbvwL._AC_UF894,1000_QL80_.jpg"),
+        ("Where the Crawdads Sing", "Delia Owens", "https://i1.sndcdn.com/artworks-000369828696-6hx9pu-t500x500.jpg"),
+        ("Educated", "Tara Westover", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDuTk3BuRN6REPtN4LJ0OKh1UiyFv8PlRKNQ&s"),
+        ("The Night Circus", "Erin Morgenstern", "https://m.media-amazon.com/images/I/710TOUsAW1L._UF1000,1000_QL80_.jpg"),
+        ("The Invisible Life of Addie LaRue", "V.E. Schwab", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReQNwfVOqoCcd6uyq8JJ2ONZhSZuGEy_3fMQ&s"),
+        ("Anxious People", "Fredrik Backman", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_LDutKa_LI8laJAGsdk4eO-t0qju7ht2tbg&s"),
+    ]
+
+    # Distributing books among book clubs
+    print("Assigning books to bookclubs...")
+    books_per_club = 3  # Number of books per bookclub
+    books = []
+    for i in range(len(book_titles_authors_images)):
+        title, author, image = book_titles_authors_images[i]
+        book = Book(
+            book_title=title,
+            book_author=author,
+            description=f"A captivating tale of {title}.",
+            book_club_id=(i // books_per_club) % len(bookclubs),  # Distribute books evenly across clubs
+            book_image=image
+        )
+        books.append(book)
+
+    print("Creating books...")
+    db.session.add_all(books)
+    db.session.commit()
+
+    # Creating Comments
+    print("Creating comments...")
+    comments = []
+    for book in books:
+        for user in random.sample(users, 3):  # Each book gets 3 comments from random users
+            comment = Comments(
+                user_id=user.id,
+                book_id=book.id,
+                content=f"Comment by {user.username} on {book.book_title}."
+            )
+            comments.append(comment)
+
+    db.session.add_all(comments)
+    db.session.commit()
+
+    # Creating Memberships
+    print("Creating memberships...")
+    memberships = []
+    for bookclub in bookclubs:
+        for user in random.sample(users, 5):  # Each book club gets 5 members
+            membership = Membership(
+                user_id=user.id,
+                bookclub_id=bookclub.id
+            )
+            memberships.append(membership)
+
+    db.session.add_all(memberships)
+    db.session.commit()
 
     print("Seeding done!")
+

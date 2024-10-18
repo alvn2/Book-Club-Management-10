@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import api from '../Services/Api';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import api from "../Services/Api";
+import axios from "axios";
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -10,9 +11,10 @@ const BookDetail = () => {
 
   useEffect(() => {
     const fetchBookClub = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
-          `http://127.0.0.1:5000/bookclubs/${id}`
+          `http://127.0.0.1:5000/bookclub/${id}`
         );
         setBookClub(response.data);
       } catch (error) {
@@ -28,15 +30,12 @@ const BookDetail = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-  if (!bookClub) return <div>No book club found.</div>;
 
   return (
     <div>
       <h1>{bookClub.name}</h1>
       <h2>Description</h2>
       <p>{bookClub.description}</p>
-      <h2>Owner</h2>
-      <p>{bookClub.owner}</p>
       <h2>Books</h2>
       <ul>
         {bookClub.books.map((book) => (

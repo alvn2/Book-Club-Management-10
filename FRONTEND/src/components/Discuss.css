@@ -1,4 +1,22 @@
 .discuss {
+<<<<<<< HEAD
+  margin: 20px 0;
+}
+
+.discuss form {
+  margin-bottom: 20px;
+}
+
+.discuss input {
+  width: calc(100% - 120px);
+  display: inline-block;
+}
+
+.discuss button {
+  display: inline-block;
+  margin-left: 10px;
+}
+=======
     margin: 20px 0;
   }
   
@@ -15,3 +33,4 @@
     display: inline-block;
     margin-left: 10px;
   }
+>>>>>>> fd7a59ff612e1b8e8776d2752400c98617293cd1
