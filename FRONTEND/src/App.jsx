@@ -9,9 +9,10 @@ import BookClubList from './components/BookClubList';
 import BookDetail from './components/BookDetail';
 import AddBookForm from './components/AddBookForm';
 import SubmitReviewForm from './components/SubmitReviewForm';
-import './App.css';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import Footer from './components/Footer'; // Import the Footer component
+import './App.css';
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
         <Navbar />
         <main>
           <Routes>
-            <Route path="/signin" element={<SignIn/>} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/" element={<Home />} />
             <Route path="/create-bookclub" element={<CreateBookClubForm />} />
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/bookclubs/:clubId/books/:bookId/review" element={<SubmitReviewForm />} />
           </Routes>
         </main>
+        <Footer /> {/* Add the Footer component here */}
       </div>
     </Router>
   );
