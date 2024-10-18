@@ -26,12 +26,14 @@ const BookClubList = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div>
-      <h2>Available Book Clubs</h2>
-      <ul>
+    <div className="container">
+      <h2 className="title">Available Book Clubs</h2>
+      <ul className="book-club-list">
         {bookClubs.map((club) => (
-          <li key={club.id}>
-            <Link to={`/bookclubs/${club.id}`}>{club.name}</Link>
+          <li key={club.id} className="book-club-item">
+            <Link to={`/bookclubs/${club.id}`} className="book-club-link">
+              {club.name}
+            </Link>
           </li>
         ))}
       </ul>

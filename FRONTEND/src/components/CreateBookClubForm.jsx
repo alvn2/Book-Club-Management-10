@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const CreateBookClubForm = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const initialValues = {
     name: "",
@@ -27,7 +27,7 @@ const CreateBookClubForm = () => {
       );
       setSuccessMessage("Book club created successfully!");
       setSubmitting(false);
-      navigate("/book-clubs"); // Navigate to book clubs page
+      navigate("/bookclubs");
     } catch (error) {
       setErrorMessage("Error creating book club. Please try again.");
       setSubmitting(false);
@@ -35,31 +35,38 @@ const CreateBookClubForm = () => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <div>
-            <label htmlFor="name">Name:</label>
-            <Field type="text" id="name" name="name" />
-            <ErrorMessage name="name" component="div" />
-          </div>
-          <div>
-            <label htmlFor="description">Description:</label>
-            <Field as="textarea" id="description" name="description" />
-            <ErrorMessage name="description" component="div" />
-          </div>
-          <button type="submit" disabled={isSubmitting}>
-            Create Book Club
-          </button>
-          {successMessage && <p className="success">{successMessage}</p>}
-          {errorMessage && <p className="error">{errorMessage}</p>}
-        </Form>
-      )}
-    </Formik>
+    <div className="container">
+      <h2>Create a New Book Club</h2>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <div className="field">
+              <label htmlFor="name">Name:</label>
+              <Field type="text" id="name" name="name" />
+              <ErrorMessage name="name" component="div" className="error" />
+            </div>
+            <div className="field">
+              <label htmlFor="description">Description:</label>
+              <Field as="textarea" id="description" name="description" />
+              <ErrorMessage
+                name="description"
+                component="div"
+                className="error"
+              />
+            </div>
+            <button type="submit" disabled={isSubmitting}>
+              Create Book Club
+            </button>
+            {successMessage && <p className="success">{successMessage}</p>}
+            {errorMessage && <p className="error">{errorMessage}</p>}
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

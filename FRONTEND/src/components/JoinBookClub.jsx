@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./JoinBookClub.css"; // Import the CSS file
 
 const JoinBookClub = () => {
   const [bookClubs, setBookClubs] = useState([]);
@@ -25,7 +26,6 @@ const JoinBookClub = () => {
       alert(response.data.message); // Alert the success message
     } catch (error) {
       if (error.response) {
-        // Handle specific errors from the server
         alert(
           error.response.data.message || "An error occurred. Please try again."
         );
@@ -36,15 +36,20 @@ const JoinBookClub = () => {
   };
 
   return (
-    <div>
-      <h2>Join a Book Club</h2>
+    <div className="container">
+      <h2 className="title">Join a Book Club</h2>
       {bookClubs.length > 0 ? (
-        <ul>
+        <ul className="club-list">
           {bookClubs.map((club) => (
-            <li key={club.id}>
+            <li key={club.id} className="club-item">
               <h3>{club.name}</h3>
               <p>{club.description}</p>
-              <button onClick={() => alert(`Joined ${club.name}`)}>Join</button>
+              <button
+                className="join-button"
+                onClick={() => handleJoin(club.id)}
+              >
+                Join
+              </button>
             </li>
           ))}
         </ul>

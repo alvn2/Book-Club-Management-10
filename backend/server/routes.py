@@ -59,7 +59,7 @@ def add_bookclub():
     bookclub = Bookclub(
         name = data['name'],
         description = data['description'],
-        owner_id = current_user.id
+        owner_id = 3
     )
     db.session.add(bookclub)
     db.session.commit()
@@ -81,21 +81,18 @@ def get_bookclubs():
         bookcluns_list.append(bookclub_dict)
     return jsonify(bookcluns_list), 200
 
-@app.route('/bookclubs/<int:id>')
-# @login_required
+@app.route('/bookclubs/<int:id>', methods=['GET'])
 def get_bookclub(id):
-    bookclub = Bookclub.query.get_or_404(id)   
-    books = [{"id": book.id, "title": book.book_title, "author": book.book_author} for book in bookclub.books]
-
-    bookclub_dict = {
-        'id': bookclub.id,
-        'name': bookclub.name,
-        'description': bookclub.description,
-        'owner': bookclub.owner.username,
-        'books': books  # Include the list of books
-    }
-    
-    return jsonify(bookclub_dict), 200
+    bookclub = Bookclub.query.get(id)
+    if bookclub:
+        return {
+            'id': bookclub.id,
+            'name': bookclub.name,
+            'description': bookclub.description,
+            'owner_id': bookclub.owner_id,
+            'books': [{'id': book.id,'book_image':book.book_image, 'title': book.book_title, 'author': book.book_author, 'description': book.description} for book in bookclub.books]
+        }
+    return {"error": "Book club not found"}, 404
 
 @app.route('/bookclub/<int:id>/join', methods=['POST', 'GET'])
 @login_required

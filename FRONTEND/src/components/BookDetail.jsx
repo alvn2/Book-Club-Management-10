@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../Services/Api";
+import axios from "axios";
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -12,7 +13,9 @@ const BookDetail = () => {
     const fetchBookClub = async () => {
       setLoading(true);
       try {
-        const response = await api.get(`/bookclubs/${id}`);
+        const response = await axios.get(
+          `http://127.0.0.1:5000/bookclub/${id}`
+        );
         setBookClub(response.data);
       } catch (error) {
         console.error("Error fetching book club details:", error);
