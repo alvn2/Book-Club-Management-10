@@ -14,13 +14,13 @@ const Footer = () => {
           <h3>Quick Links</h3>
           <ul>
             <li>
-              <Link to="/">Home</Link> {/* Link to Home */}
+              <Link to="/">Home</Link> 
             </li>
             <li>
-              <Link to="/bookclubs">Book Clubs</Link> {/* Link to Book Clubs */}
+              <Link to="/bookclubs">Book Clubs</Link> 
             </li>
             <li>
-              <Link to="/create-bookclub">Create Club</Link> {/* Link to Create Club */}
+              <Link to="/create-bookclub">Create Club</Link> 
             </li>
           </ul>
         </div>
