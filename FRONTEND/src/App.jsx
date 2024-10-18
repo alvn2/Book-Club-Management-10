@@ -11,6 +11,7 @@ import AddBookForm from './components/AddBookForm';
 import SubmitReviewForm from './components/SubmitReviewForm';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import BookList from './components/BookList'; // Import the BookList component
 import Footer from './components/Footer'; 
 import './App.css';
 
@@ -28,6 +29,8 @@ const App = () => {
             <Route path="/join-bookclub" element={<JoinBookClub />} />
             <Route path="/discuss" element={<Discuss />} />
             <Route path="/bookclubs" element={<BookClubList />} />
+            <Route path="/book-list" element={<BookList />} /> {/* Add BookList route */}
+            <Route path="/add-book" element={<AddBookForm />} /> {/* Add standalone AddBook route */}
             <Route path="/bookclubs/:clubId" element={<BookDetail />} />
             <Route path="/bookclubs/:clubId/add-book" element={<AddBookForm />} />
             <Route path="/bookclubs/:clubId/books/:bookId/review" element={<SubmitReviewForm />} />

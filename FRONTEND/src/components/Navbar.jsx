@@ -10,8 +10,8 @@ function Navbar() {
         <Link to="/discuss">Discuss</Link>
         <Link to="/create-bookclub">Create a Book Club</Link>
         <Link to="/bookclubs">Book Clubs</Link>
-        <Link to="/book-list">Book List</Link>
-        <Link to="/book-form">Add a Book</Link>
+        <Link to="/book-list">Book List</Link> {/* Updated to match route */}
+        <Link to="/add-book">Add a Book</Link> {/* Updated to match route */}
         <Link to="/signin">Sign In</Link>
         <Link to="/signup">Sign Up</Link>
       </nav>
