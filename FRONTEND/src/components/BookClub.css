@@ -1,5 +1,3 @@
-/* BookClub.css */
-
 .book-club {
     margin: 20px 0;
   }
@@ -18,7 +16,7 @@
   }
   
   .book-club li::before {
-    content: "\2713"; /* Checkmark symbol */
+    content: "\2713";
     margin-right: 10px;
     color: #007bff;
   }

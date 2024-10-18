@@ -8,7 +8,7 @@ const AddBook = () => {
   return (
     <div>
       <h2>Add a New Book</h2>
-      <BookForm clubId={clubId} /> {/* Pass the clubId to BookForm */}
+      <BookForm clubId={clubId} /> 
     </div>
   );
 };

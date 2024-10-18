@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import axios for making requests
+import axios from "axios"; 
 import "./SignUp.css";
 
 const SignUp = ({ onSignUp }) => {
@@ -10,8 +10,8 @@ const SignUp = ({ onSignUp }) => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState(null); // State for error messages
-  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(null); 
+  const [loading, setLoading] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,31 +23,31 @@ const SignUp = ({ onSignUp }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
-    setError(null); // Reset any previous errors
+    setLoading(true); 
+    setError(null); 
 
     try {
       const response = await axios.post(
         "http://127.0.0.1:5000/signUp",
         formData
-      ); // Make POST request to Flask backend
-      console.log(response.data); // Log success response
-      navigate("/home"); // Redirect to home page on success
+      ); 
+      console.log(response.data); 
+      navigate("/home");
     } catch (err) {
       if (err.response && err.response.data.errors) {
-        setError(err.response.data.errors.email); // Set specific error message
+        setError(err.response.data.errors.email); 
       } else {
-        setError("Something went wrong. Please try again."); // Generic error message
+        setError("Something went wrong. Please try again."); 
       }
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false); 
     }
   };
 
   return (
     <div className="signup-page">
       <h2>Sign Up</h2>
-      {error && <p className="error">{error}</p>} {/* Display error message */}
+      {error && <p className="error">{error}</p>} 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -84,7 +84,6 @@ const SignUp = ({ onSignUp }) => {
         </div>
         <button type="submit" disabled={loading}>
           {loading ? "Signing Up..." : "Sign Up"}{" "}
-          {/* Button text changes based on loading state */}
         </button>
       </form>
     </div>

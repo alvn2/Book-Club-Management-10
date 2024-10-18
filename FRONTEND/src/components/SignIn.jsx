@@ -19,7 +19,7 @@ const SignIn = ({ onLogin }) => {
 
         if (user) {
           if (typeof onLogin === "function") {
-            onLogin(user.role); // Call onLogin only if it's a function
+            onLogin(user.role); 
             navigate("/home");
           } else {
             console.error("onLogin is not a function");
@@ -45,7 +45,7 @@ const SignIn = ({ onLogin }) => {
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
-            setError(""); // Clear error on input change
+            setError(""); 
           }}
           placeholder="Enter your username"
         />
@@ -57,7 +57,7 @@ const SignIn = ({ onLogin }) => {
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
-            setError(""); // Clear error on input change
+            setError(""); 
           }}
           placeholder="Enter your password"
         />

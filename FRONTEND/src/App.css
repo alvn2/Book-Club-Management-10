@@ -1,6 +1,9 @@
-App.css
-
-/* Reset some default browser styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
 * {
   margin: 0;
   padding: 0;
@@ -14,14 +17,17 @@ body {
   color: #343a40;
 }
 
-/* Main container styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Navbar styles */
 nav {
   background-color: #333;
   color: white;
@@ -48,13 +54,13 @@ nav a:hover {
   text-decoration: underline;
 }
 
-/* Main content styles */
+
 main {
   flex: 1;
   padding: 2rem;
 }
 
-/* Form styles */
+
 form {
   margin: 1rem 0;
 }
@@ -87,7 +93,7 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Success and error messages */
+
 .success {
   color: green;
 }
@@ -96,7 +102,7 @@ button:hover {
   color: red;
 }
 
-/* List styles */
+
 ul {
   list-style-type: none;
 }
