@@ -1,100 +1,112 @@
 from server import app, bcrypt, db
 from server.models import Users, Bookclub, Book, Comments, Membership
-from flask import request, jsonify
+from flask import request, jsonify, redirect, url_for
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
 @login_required
 def home():
-    return '<h1>Home Page</h1>'
+    return jsonify({'message': f'{current_user.username}!'}), 200
 
-@app.route('/register', methods=['POST', 'GET'])
+
+@app.route('/signUp', methods=['POST', 'GET'])
 def register():
     if current_user.is_authenticated:
         return jsonify({'message': 'User already logged in!'}), 200
+    
     data = request.get_json()
 
     if Users.query.filter_by(email=data['email']).first():
-        return jsonify({'errors': {'email': 'Email already registered. please choose a different one'}}), 400
+        return jsonify({'errors': {'email': 'Email already registered. Please choose a different one'}}), 400
 
     hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+
     user = Users(
-        username = data['username'],
-        email = data['email'],
-        image_file = data['image_file'],
-        password = hashed_password
-        ) 
+        username=data['name'],
+        email=data['email'],
+        password=hashed_password
+    ) 
     db.session.add(user)
     db.session.commit()
-    return jsonify({'message': f'User {data["username"]} registered successfully!'}), 201
+    login_user(user)
+    return jsonify({'message': f'User {data["name"]} registered successfully!'}), 201
 
-@app.route('/login', methods=['POST', 'GET'])
+
+@app.route('/signIn', methods=['POST'])
 def login():
     if current_user.is_authenticated:
         return jsonify({'message': 'User already logged in!'}), 200
+
     data = request.get_json()
     user = Users.query.filter_by(email=data['email']).first()
+
     if user and bcrypt.check_password_hash(user.password, data['password']):
         login_user(user)
-        return jsonify({'message': f'User {user.username} logged in successfully!'}), 200
+        return jsonify({'username': user.username, 'role': user.role}), 200
     else:
         return jsonify({'message': 'Login failed, please check your email or password.'}), 401
+    
     
 @app.route('/logout')
 def logout():
     logout_user()
     return jsonify({'message': 'User logged out successfully!'}), 200
 
-@app.route('/New-bookclub', methods=['POST', 'GET'])
-@login_required
+@app.route('/create-bookclub', methods=['POST', 'GET'])
+#@login_required
 def add_bookclub():
     data = request.get_json()
     bookclub = Bookclub(
         name = data['name'],
         description = data['description'],
-        owner_id = current_user.id
+        owner_id = 3
     )
     db.session.add(bookclub)
     db.session.commit()
     return jsonify({'message': f'Bookclub {data["name"]} added successfully!'}), 201
 
 @app.route('/bookclubs')
-@login_required
+#@login_required
 def get_bookclubs():
     bookclubs = Bookclub.query.all()
     bookcluns_list = []
     for bookclub in bookclubs:
+        owner_username = bookclub.owner.username if bookclub.owner else "Unknown"
         bookclub_dict = {
+            'id': bookclub.id,
             'name': bookclub.name,
             'description': bookclub.description,
-            'owner': bookclub.owner.username
+            'owner': owner_username
         }
         bookcluns_list.append(bookclub_dict)
     return jsonify(bookcluns_list), 200
 
-@app.route('/bookclub/<int:id>')
-@login_required
+@app.route('/bookclubs/<int:id>', methods=['GET'])
 def get_bookclub(id):
-    bookclub = Bookclub.query.get_or_404(id)   
-    bookclub_dict = {
-        'name': bookclub.name,
-        'description': bookclub.description,
-        'owner': bookclub.owner.username}
-    return jsonify(bookclub_dict), 200
+    bookclub = Bookclub.query.get(id)
+    if bookclub:
+        return {
+            'id': bookclub.id,
+            'name': bookclub.name,
+            'description': bookclub.description,
+            'owner_id': bookclub.owner_id,
+            'books': [{'id': book.id,'book_image':book.book_image, 'title': book.book_title, 'author': book.book_author, 'description': book.description} for book in bookclub.books]
+        }
+    return {"error": "Book club not found"}, 404
 
 @app.route('/bookclub/<int:id>/join', methods=['POST', 'GET'])
 @login_required
 def join_bookclub(id):
-    #existing_membership = Membership.query.filter_by(user_id=current_user.id, bookclub_id=bookclub_id).first()
-    #if existing_membership:
-     #   return jsonify({'message': 'You are already a member of this bookclub!'}), 200
+    existing_membership = Membership.query.filter_by(user_id=current_user.id, bookclub_id=id).first()
+    if existing_membership:
+        return jsonify({'message': 'You are already a member of this bookclub!'}), 200
 
-    #new_membership = Membership(user_id=current_user.id, bookclub_id=bookclub.id)
-    #db.session.add(new_membership)
-    #db.session.commit()
+    new_membership = Membership(user_id=current_user.id, bookclub_id=id)
+    db.session.add(new_membership)
+    db.session.commit()
     return jsonify({'message': 'You have successfully joined the book club!'}), 201
 
-@app.route('/add-book/', methods=['POST', 'GET'])
+@app.route('/addbook/', methods=['POST', 'GET'])
 @login_required
 def add_book():
     data = request.get_json()
@@ -109,8 +121,8 @@ def add_book():
     db.session.commit()
     return jsonify({'message': f'Book {data["book_title"]} added successfully!'}), 201
 
-@app.route('/books')
-
+@app.route('/booklist')
+#@login_required
 def get_books():
     books = Book.query.all()
     books_list = []
@@ -119,7 +131,9 @@ def get_books():
             'book_title': book.book_title,
             'book_author': book.book_author,
             'description': book.description,
-            'book_club_id': book.book_club_id
+            'book_club_id': book.book_club_id,
+            'book_image': book.book_image,
+            'comments': [{'id': comment.id, 'user': comment.user.username, 'content': comment.content} for comment in book.comments]
             }
         books_list.append(book_dict)
     return jsonify(books_list), 200
@@ -132,7 +146,7 @@ def get_book(id):
         'book_title': book.book_title,
         'book_author': book.book_author,
         'description': book.description,
-        'book_club': book.bookclub.name
+        'book_club': book.book_club_id
         }
     return jsonify(book_dict), 200
 

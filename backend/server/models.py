@@ -10,7 +10,6 @@ class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.png')
     password = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
@@ -25,14 +24,15 @@ class Bookclub(db.Model):
     books = db.relationship('Book', back_populates='book_club', lazy=True)
 
     def __repr__(self):
-        return f"Bookclub('{self.name}', '{self.description}')"
+        return f"Bookclub('{self.name}', '{self.description}', '{self.books}')"
     
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    book_image = db.Column(db.Text, nullable=False, default='default.jpg')
     book_title = db.Column(db.String(50), nullable=False)
     book_author = db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    book_club_id = db.Column(db.Integer, db.ForeignKey('bookclub.id'),default=None)
+    book_club_id = db.Column(db.Integer, db.ForeignKey('bookclub.id'), default=None)
     book_club = db.relationship('Bookclub', back_populates='books', lazy=True)
 
     def __repr__(self):
@@ -46,9 +46,15 @@ class Comments(db.Model):
     user = db.relationship('Users', backref='comments', lazy=True)
     book = db.relationship('Book', backref='comments', lazy=True)
 
+    def __repr__(self):
+        return f"Comment('{self.content}')"
+
 class Membership(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     bookclub_id = db.Column(db.Integer, db.ForeignKey('bookclub.id'), nullable=False)
     user = db.relationship('Users', backref='memberships', lazy=True)
     bookclub = db.relationship('Bookclub', backref='members', lazy=True)
+
+    def __repr__(self):
+        return f"Membership('{self.user_id}', '{self.bookclub_id}')"
