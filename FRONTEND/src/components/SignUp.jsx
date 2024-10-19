@@ -34,7 +34,7 @@ const SignUp = () => {
 
       console.log(response.data); 
       // Redirect after successful sign-up
-      navigate("/home");
+      navigate("/");
     } catch (err) {
       if (err.response && err.response.data.errors) {
         setError(err.response.data.errors.email); 

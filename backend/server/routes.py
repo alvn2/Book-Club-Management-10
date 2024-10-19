@@ -38,15 +38,27 @@ def login():
         return jsonify({'message': 'User already logged in!'}), 200
 
     data = request.get_json()
-    user = Users.query.filter_by(email=data['email']).first()
+    print(f"Received login data: {data}")  # Log received data (remove in production)
 
-    if user and bcrypt.check_password_hash(user.password, data['password']):
+    # Check if we received an email or username
+    if 'email' in data:
+        user = Users.query.filter_by(email=data['email']).first()
+    elif 'username' in data:
+        user = Users.query.filter_by(username=data['username']).first()
+    else:
+        return jsonify({'message': 'Email or username is required'}), 400
+
+    if not user:
+        print(f"No user found for {data.get('email') or data.get('username')}")
+        return jsonify({'message': 'User not found. Please check your email/username.'}), 401
+
+    if bcrypt.check_password_hash(user.password, data['password']):
         login_user(user)
+        print(f"User {user.username} logged in successfully")
         return jsonify({'username': user.username, 'role': user.role}), 200
     else:
-        return jsonify({'message': 'Login failed, please check your email or password.'}), 401
-    
-    
+        print(f"Invalid password for user {user.username}")
+        return jsonify({'message': 'Invalid password. Please try again.'}), 401
 @app.route('/logout')
 def logout():
     logout_user()

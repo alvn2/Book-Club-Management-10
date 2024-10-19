@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./SignIn.css";
 
 const SignIn = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);  // Loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -16,12 +16,12 @@ const SignIn = ({ onLogin }) => {
     }
 
     setLoading(true);
-    setError(""); // Clear previous errors
+    setError(""); 
 
     try {
       const response = await fetch("http://localhost:5000/users");
       if (!response.ok) {
-        throw new Error("Failed to fetch users");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const users = await response.json();
@@ -41,7 +41,7 @@ const SignIn = ({ onLogin }) => {
         setError("Invalid username or password");
       }
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error during login:", error);
       setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
@@ -56,10 +56,7 @@ const SignIn = ({ onLogin }) => {
         <input
           type="text"
           value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-            setError("");
-          }}
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="Enter your username"
           required
         />
@@ -69,10 +66,7 @@ const SignIn = ({ onLogin }) => {
         <input
           type="password"
           value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setError("");
-          }}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter your password"
           required
         />
@@ -81,10 +75,11 @@ const SignIn = ({ onLogin }) => {
       <button
         onClick={handleLogin}
         className="login-button"
-        disabled={loading} // Disable button when loading
+        disabled={loading}
       >
         {loading ? "Logging in..." : "Log In"}
       </button>
+      <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
     </div>
   );
 };
