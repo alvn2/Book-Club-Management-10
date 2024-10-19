@@ -1,62 +1,82 @@
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
+import React, { useState } from 'react';
+// import './AddBookForm.css';
 
-const AddBookForm = ({ clubId }) => {
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const initialValues = {
+const AddBookForm = () => {
+  const [formData, setFormData] = useState({
     title: "",
     author: "",
+    description: ""
+  });
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Required"),
-    author: Yup.string().required("Required"),
-  });
-
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:5000/add-book`,
-        values
-      );
-      setSuccessMessage("Book added successfully!");
-      setSubmitting(false);
+      const response = await fetch("http://localhost:5000/addBook", { // Adjust this to your API endpoint
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        setSuccessMessage("Book added successfully!");
+        setFormData({ title: "", author: "", description: "" });
+      } else {
+        throw new Error("Failed to add the book.");
+      }
     } catch (error) {
-      setErrorMessage("Error adding book. Please try again.");
-      setSubmitting(false);
+      console.error("Error adding book:", error);
+      setSuccessMessage("Failed to add the book.");
     }
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <div>
-            <label htmlFor="title">Title:</label>
-            <Field type="text" id="title" name="title" />
-            <ErrorMessage name="title" component="div" />
-          </div>
-          <div>
-            <label htmlFor="author">Author:</label>
-            <Field type="text" id="author" name="author" />
-            <ErrorMessage name="author" component="div" />
-          </div>
-          <button type="submit" disabled={isSubmitting}>
-            Add Book
-          </button>
-          {successMessage && <p className="success">{successMessage}</p>}
-          {errorMessage && <p className="error">{errorMessage}</p>}
-        </Form>
-      )}
-    </Formik>
+    <div className="add-book-form">
+      <h2>Add a Book</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Title:</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Author:</label>
+          <input
+            type="text"
+            name="author"
+            value={formData.author}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Description:</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button type="submit">Add Book</button>
+      </form>
+      {successMessage && <p>{successMessage}</p>}
+    </div>
   );
 };
 

@@ -20,19 +20,25 @@ const SignIn = ({ onLogin }) => {
 
     try {
       const response = await fetch("http://localhost:5000/users");
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const users = await response.json();
+      console.log("Users from the server:", users); // Debugging output
+      
+      // Search for user in the server response
       const user = users.find(
         (u) => u.name === username && u.password === password
       );
 
       if (user) {
+        console.log("Login successful:", user); // Debugging output
+
         if (typeof onLogin === "function") {
-          onLogin(user.role); 
-          navigate("/home"); 
+          onLogin(user.role);  // Assuming `onLogin` handles user session state
+          navigate("/home"); // Redirect to home
         } else {
           console.error("onLogin is not a function");
           setError("Login function is not defined.");
